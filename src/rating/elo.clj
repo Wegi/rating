@@ -13,15 +13,16 @@
 
   ([rating-one rating-two winner]
    (rate rating-one rating-two winner 10))
-  
+
   ([rating-one rating-two winner k-value]
    (let [expected-one (/ 1
                          (inc (Math/pow 10
-                                        (/ (- rating-two rating-one) 400))))]
+                                        (/ (- rating-two rating-one) 400))))
+         expected-two (- 1 expected-one)]
      (case winner
        1 [(transact-player rating-one expected-one 1 k-value)
-          (transact-player rating-two (- 1 expected-one) 0 k-value)]
+          (transact-player rating-two expected-two 0 k-value)]
        2 [(transact-player rating-one expected-one 0 k-value)
-          (transact-player rating-two (- 1 expected-one) 1 k-value)]
+          (transact-player rating-two expected-two 1 k-value)]
        0 [(transact-player rating-one expected-one 0.5 k-value)
-          (transact-player rating-two (- 1 expected-one) 0.5 k-value)]))))
+          (transact-player rating-two expected-two 0.5 k-value)]))))
